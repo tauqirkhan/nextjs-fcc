@@ -3,8 +3,8 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios, { Axios } from "axios";
-import toast from "react-hot-toast"
+import axios from "axios";
+import toast, {Toaster} from "react-hot-toast"
 
 export default function SignUpPage(){
     const router = useRouter()
@@ -53,6 +53,7 @@ export default function SignUpPage(){
         <div>
             <h1>{loading ? "Processing" : "Sign Up"}</h1>
             <hr />
+            <Toaster />
             <label htmlFor="username">username</label>
             <input 
                 id="username"
