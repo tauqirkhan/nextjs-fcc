@@ -1,11 +1,13 @@
 "use client";
 import axios from "axios";
-import Link from "next/navigation";
+import Link from "next/link";
 import toast, {Toaster} from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
+import React from "react";
 
 export default function ProfilePage(){
+    const [userDetails, setUserDetails] = React.useState("nothing")
+
     const router = useRouter()
 
     const logout = async () => {
@@ -23,6 +25,11 @@ export default function ProfilePage(){
             toast.error(message)
         }
     }
+
+    const getUserDetails = async () => {
+        const res = await axios.get("/api/users/me")
+        setUserDetails(res.data.data._id);
+    }
    
     return(
     <div>
@@ -30,6 +37,14 @@ export default function ProfilePage(){
         <h1>Profile</h1>
         <hr />
         <p>Profile Page</p>
+        <hr />
+        <h2>
+            {userDetails === "nothing" ? "Nothing" : <Link href={`/profile/${userDetails}`}> {userDetails} </Link>}
+        </h2>
+    <hr />
+    <button onClick={getUserDetails}>
+        Get Users Details
+    </button>  
     <hr />
     <button onClick={logout}>
         Log Out

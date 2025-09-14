@@ -13,7 +13,7 @@ export default async function UserProfile({params}: UserProfileProps){
         <h1>Profile</h1>
         <hr />
         <p>Profile Page</p>
-        <span>Profile page: {id}</span>
+        <span>Profile id: {id}</span>
     </div>
    ) 
 }
