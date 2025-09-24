@@ -36,6 +36,7 @@ export default function SignUpPage(){
             const response = await axios.post("/api/users/signup", user)
             console.log("Signup success", response.data)
 
+            toast.success("User Sign Successfully, Verify it ASAP!")
             router.push("/login")
         } catch (error: unknown) {
             let errorMessage = "Something went wrong"
