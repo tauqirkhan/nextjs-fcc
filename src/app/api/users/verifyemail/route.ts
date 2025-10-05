@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 
 
-connect()
+await connect()
 
 export async function POST(request: NextRequest){
     try {
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest){
             }
         )
 
-    } catch (error) {
+    } catch (error: unknown) {
         let errorMessage = "Something went wrong"
 
         if(error instanceof Error)
