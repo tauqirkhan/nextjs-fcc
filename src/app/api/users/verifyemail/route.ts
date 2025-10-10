@@ -17,6 +17,17 @@ export async function POST(request: NextRequest){
                 verifyTokenExpiry: {$gt: Date.now()}
             }
         )
+
+        if(!user) {
+            return NextResponse.json(
+                {
+                    error: "Invalid token", 
+                    status: 400,
+                    success: false
+                }
+            )
+        }
+
         console.log("user: ", user)
 
         user.isVerified = true
@@ -39,8 +50,11 @@ export async function POST(request: NextRequest){
             errorMessage = error.message
 
         return NextResponse.json(
-            {error: errorMessage},
-            {status: 500}
+            {
+                error: errorMessage,
+                status: 500,
+                success: false
+            }
         )
     }
 }

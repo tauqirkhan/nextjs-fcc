@@ -53,6 +53,7 @@ export async function POST(request: NextRequest){
         if(error instanceof Error)
             message = error.message
 
+        console.log("/signup error: ", message)
         return NextResponse.json({message}, {status: 500})
     }
 }

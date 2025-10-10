@@ -13,7 +13,15 @@ export default function VerifyEmailPage(){
 
     const verifyUserEmail = async () => {
         try {
-            await axios.post("/api/users/verifyemail", {token})
+            const response = await axios.post("/api/users/verifyemail", {token})
+            const status: boolean = response.data.success;
+
+            if(!status){
+                setError(true)
+                toast.error("Invalid token");
+                return 
+            }
+
             setVerified(true)
             toast.success("Verified Successfully")
         } catch (error: unknown) {

@@ -19,6 +19,14 @@ export async function POST(request: NextRequest){
         )
         console.log("user: ", user)
 
+        if(!user) 
+            return NextResponse.json(
+                {
+                    error: "Invalid Token", 
+                    status: 400
+                }
+            )
+
         // setting undefined will remove the field, will not set it undefined on db
         user.forgotPassword = undefined
         user.forgotPasswordExpiry = undefined

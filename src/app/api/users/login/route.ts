@@ -57,6 +57,8 @@ export async function POST(request: NextRequest){
         if(error instanceof Error)
             error = error.message
 
+        console.log("/login error: ", error)
+
         return NextResponse.json(
             {error},
             {status: 500}
