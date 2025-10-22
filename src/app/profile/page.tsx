@@ -39,14 +39,18 @@ export default function ProfilePage(){
     const resetPassword = async () => {
         const res = await axios.get("/api/users/me")
         if(res.data.success){
-            await sendEmail(
-                {                 
-                    email: res.data.data.email,
-                    emailType: "RESET",
-                    userId: res.data.data._id
-                }
-            )
-            toast.success("Reset password link send to your registered email")
+            const status = await axios.post("/api/users/sendResetEmail", {email: res.data.data.email, emailType: "RESET",userId: res.data.data._id})
+            if(status.data.success){
+                toast.success("Reset password link send to your registered email")
+            }
+            // await sendEmail(
+            //     {                 
+            //         email: res.data.data.email,
+            //         emailType: "RESET",
+            //         userId: res.data.data._id
+            //     }
+            // )
+            
         } else{
             toast.error(res.data.error)
         }
