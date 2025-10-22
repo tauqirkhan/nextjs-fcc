@@ -7,7 +7,7 @@ export const getDataFromToken = (request: NextRequest) => {
         
         // Type predicate: special way to tell TypeScript that a function will narrow down the type of a variable.
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload
-        
+         
         // it shows '_id' on mongo atlas but it's showing "id" on decoded token from cookies because I had set it when I created explicitly on login post request
         if(typeof decodedToken === "object" && "id" in decodedToken)
             return decodedToken.id

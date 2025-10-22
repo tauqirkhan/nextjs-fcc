@@ -14,7 +14,8 @@ export async function GET(request: NextRequest) {
         
         return NextResponse.json({
             message: "User Found",
-            data: user
+            data: user,
+            success: true
         })
     } catch (error) {
         let errorMessage = "Something went wrong"
@@ -23,8 +24,11 @@ export async function GET(request: NextRequest) {
             errorMessage = error.message
 
         return NextResponse.json(
-            {error: errorMessage},
-            {status: 400}
+            {
+                error: errorMessage,
+                status: 400,
+                success: false
+            }
         )
     }
 }

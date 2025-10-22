@@ -8,8 +8,10 @@ await connect();
 export async function POST(request: NextRequest){
     try {
         const reqBody = await request.json()
-        const {token} = reqBody 
+        const {token, newPassword} = reqBody 
         console.log("token: ", token)
+        console.log("newPassword: ", newPassword)
+
 
         const user = await User.findOne(
             {
@@ -23,9 +25,13 @@ export async function POST(request: NextRequest){
             return NextResponse.json(
                 {
                     error: "Invalid Token", 
-                    status: 400
+                    status: 400,
+                    success: false
                 }
             )
+
+        // setting new password
+        user.password = newPassword
 
         // setting undefined will remove the field, will not set it undefined on db
         user.forgotPassword = undefined
@@ -46,8 +52,11 @@ export async function POST(request: NextRequest){
                 errorMessage = error.message
 
             return NextResponse.json(
-                {error: errorMessage},
-                {status: 500}
+                {
+                    error: errorMessage,
+                    status: 500,
+                    success: false
+                }
             )
         }
 }

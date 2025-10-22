@@ -49,6 +49,7 @@ export default function VerifyEmailPage(){
 
     return(
         <div>
+            <Toaster />
             <h1>Verify Email</h1>
             <h2>{token ? `${token}` : "no token"}</h2>
 
@@ -62,7 +63,6 @@ export default function VerifyEmailPage(){
             {error && 
                 <div>
                     <h1>Error</h1>
-                    <Toaster />
                 </div>
             }
         </div>

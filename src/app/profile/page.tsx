@@ -4,6 +4,7 @@ import Link from "next/link";
 import toast, {Toaster} from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { sendEmail } from "@/helpers/mailer";
 
 export default function ProfilePage(){
     const [userDetails, setUserDetails] = React.useState("nothing")
@@ -12,9 +13,12 @@ export default function ProfilePage(){
 
     const logout = async () => {
         try {
-            await axios.get("/api/users/logout")
-            toast.success("Log Out Successful")
-            router.push("/login")
+            const res = await axios.get("/api/users/logout")
+            if(res.data.success){
+                toast.success("Log Out Successful")
+                router.push("/login")
+            } else 
+                throw new Error(res.data.error)
         } catch (error: unknown) {
             let message = "Something went wrong"
         
@@ -28,7 +32,24 @@ export default function ProfilePage(){
 
     const getUserDetails = async () => {
         const res = await axios.get("/api/users/me")
-        setUserDetails(res.data.data._id);
+        if(res.data.success)
+            setUserDetails(res.data.data._id);
+    }
+
+    const resetPassword = async () => {
+        const res = await axios.get("/api/users/me")
+        if(res.data.success){
+            await sendEmail(
+                {                 
+                    email: res.data.data.email,
+                    emailType: "RESET",
+                    userId: res.data.data._id
+                }
+            )
+            toast.success("Reset password link send to your registered email")
+        } else{
+            toast.error(res.data.error)
+        }
     }
    
     return(
@@ -41,14 +62,18 @@ export default function ProfilePage(){
         <h2>
             {userDetails === "nothing" ? "Nothing" : <Link href={`/profile/${userDetails}`}> {userDetails} </Link>}
         </h2>
-    <hr />
-    <button onClick={getUserDetails}>
-        Get Users Details
-    </button>  
-    <hr />
-    <button onClick={logout}>
-        Log Out
-    </button>
+        <hr />
+        <button onClick={getUserDetails}>
+            Get Users Details
+        </button>  
+        <hr />
+        <button onClick={logout}>
+            Log Out
+        </button>
+        <hr />
+        <button onClick={resetPassword}>
+            Reset Password
+        </button>
     </div>
    ) 
 }
