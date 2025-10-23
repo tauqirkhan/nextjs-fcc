@@ -4,7 +4,6 @@ import Link from "next/link";
 import toast, {Toaster} from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { sendEmail } from "@/helpers/mailer";
 
 export default function ProfilePage(){
     const [userDetails, setUserDetails] = React.useState("nothing")

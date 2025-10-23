@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import React, {useState, useEffect} from "react";  
+import React, {useState, useEffect, useCallback} from "react";  
 import Link from "next/link";
 import toast, {Toaster} from "react-hot-toast";
 
@@ -11,7 +11,7 @@ export default function VerifyEmailPage(){
     const [verified, setVerified] = useState(false)
     const [error, setError] = useState(false)
 
-    const verifyUserEmail = async () => {
+    const verifyUserEmail = useCallback(async () => {
         try {
             const response = await axios.post("/api/users/verifyemail", {token})
             const status: boolean = response.data.success;
@@ -34,7 +34,7 @@ export default function VerifyEmailPage(){
 
             toast.error(errorMessage);
         }
-    }
+    }, [token])
 
     useEffect(() => {
         // left side of "=" in query is 0 and right is 1
@@ -44,7 +44,7 @@ export default function VerifyEmailPage(){
 
     useEffect(() => {
         if(token.length > 0)
-            verifyUserEmail()
+            verifyUserEmail() 
     }, [token])
 
     return(

@@ -5,8 +5,8 @@ type UserProfileProps = {
     }
 }
 
-export default async function UserProfile({params}: UserProfileProps){
-   const { id } = await params;
+export default function UserProfile({params}: UserProfileProps){
+   const { id } = params;
     
     return(
     <div>

@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
         
         const {email, emailType, userId} = reqBody
 
-        const res = await sendEmail({email, emailType, userId})
+        await sendEmail({email, emailType, userId})
 
         return NextResponse.json(
             {
