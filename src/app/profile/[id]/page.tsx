@@ -1,12 +1,13 @@
 
 type UserProfileProps = {
-    params: {
+    //nextjs expects params object as promise
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
-export default function UserProfile({params}: UserProfileProps){
-   const { id } = params;
+export default async function UserProfile({params}: UserProfileProps){
+   const { id } = await params;
     
     return(
     <div>
